@@ -17,6 +17,7 @@ package com.ling.lingkb.common.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author shipotian
@@ -36,10 +37,12 @@ public class DocumentParseResult {
     /**
      * 元数据（作者、创建时间等）
      */
-    private DocumentMetadata metadata;
+    @Builder.Default
+    private DocumentMetadata metadata = new DocumentMetadata();
 
     @Data
     @Builder
+    @NoArgsConstructor
     public class DocumentMetadata {
         private String author;
         private String creationDate;

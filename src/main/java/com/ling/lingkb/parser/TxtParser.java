@@ -17,6 +17,7 @@ package com.ling.lingkb.parser;
 
 import com.ling.lingkb.common.entity.DocumentParseResult;
 import com.ling.lingkb.common.exception.DocumentParseException;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -33,32 +34,35 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TxtParser implements DocumentParser {
-
     /**
-     * 解析 TXT 文档，提取文本内容及基础元数据。
-     *
-     * <p><b>WARNING</b>: TXT 是纯文本格式，<u>无内置“作者”“页数”等结构化元数据</u>。<br>
-     *
-     * @param file 待解析的 TXT 文件，不可为 null
-     * @return 解析结果（包含文本内容、文件名等基础元数据）
-     * @throws DocumentParseException 文件读取失败或编码不支持时抛出
-     * @implSpec 文本内容按 UTF-8 编码读取，异常时直接抛出 DocumentParseException。
-     * @apiNote 适用于通用纯文本解析，如需复杂元数据建议使用 PDF/Word 等格式。
+     * 最大读取行数
      */
+    private static final int MAX_LINES = 100_000;
+
     @Override
     public DocumentParseResult parse(File file) throws DocumentParseException {
         String fileName = file.getName();
         DocumentParseResult result = new DocumentParseResult();
         result.setSourceFileName(fileName);
-        try {
-            // 提取文本内容（按 UTF-8 编码读取，可根据实际情况调整）
-            String text = Files.readString(file.toPath(), StandardCharsets.UTF_8);
-            result.setTextContent(text);
+
+        try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
+            StringBuilder textBuilder = new StringBuilder();
+            String line;
+            int lineCount = 0;
+
+            // 流式读取文本内容
+            while ((line = reader.readLine()) != null && lineCount < MAX_LINES) {
+                textBuilder.append(line).append("\n");
+                lineCount++;
+            }
+
+            result.setTextContent(textBuilder.toString());
+
             // 提取元数据
-            DocumentParseResult.DocumentMetadata metadata =
+            result.setMetadata(
                     DocumentParseResult.DocumentMetadata.builder().creationDate(String.valueOf(file.lastModified()))
-                            .build();
-            result.setMetadata(metadata);
+                            .pageCount(String.valueOf(lineCount)) // 使用行数作为“页数”
+                            .build());
 
             return result;
         } catch (IOException e) {
