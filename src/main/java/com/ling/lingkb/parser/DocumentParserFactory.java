@@ -45,7 +45,7 @@ public class DocumentParserFactory {
      * 根据文件扩展名获取解析器
      */
     private DocumentParser getParserByExtension(String extension) throws UnsupportedDocumentTypeException {
-        return parsers.stream().filter(p -> p.supportedTypes().contains(extension)).findFirst()
+        return parsers.stream().filter(p -> p.supportedTypes().contains(extension.toLowerCase())).findFirst()
                 .orElseThrow(() -> new UnsupportedDocumentTypeException("不支持的文档类型：" + extension));
     }
 
