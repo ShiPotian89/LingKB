@@ -34,9 +34,12 @@ import org.apache.pdfbox.text.PDFTextStripper;
  * @since 1.0.0
  */
 public class PdfParser implements DocumentParser {
+
     @Override
     public DocumentParseResult parse(File file) throws DocumentParseException {
+        DocumentParseResult result = new DocumentParseResult();
         String fileName = file.getName();
+        result.setSourceFileName(fileName);
         try (PDDocument document = Loader.loadPDF(file)) {
             PDFTextStripper stripper = new PDFTextStripper();
             //按位置排序文本（适用于复杂布局）
@@ -44,11 +47,7 @@ public class PdfParser implements DocumentParser {
             // 从第1页开始
             stripper.setStartPage(1);
             String text = stripper.getText(document);
-
-            DocumentParseResult result = new DocumentParseResult();
             result.setTextContent(text);
-            result.setSourceFileName(fileName);
-
             // 提取元数据
             PDDocumentInformation info = document.getDocumentInformation();
             DocumentParseResult.DocumentMetadata documentMetadata =
