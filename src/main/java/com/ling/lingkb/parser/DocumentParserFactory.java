@@ -19,7 +19,9 @@ import com.ling.lingkb.common.entity.DocumentParseResult;
 import com.ling.lingkb.common.exception.DocumentParseException;
 import com.ling.lingkb.common.exception.UnsupportedDocumentTypeException;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
@@ -32,6 +34,7 @@ import org.springframework.stereotype.Component;
  * @date 2025/6/19
  * @since 1.0.0
  */
+@Slf4j
 @Component
 public class DocumentParserFactory {
     private final List<DocumentParser> parsers;
@@ -57,7 +60,6 @@ public class DocumentParserFactory {
         if (StringUtils.isNotBlank(extension)) {
             return getParserByExtension(extension).parse(file);
         }
-
         // 无扩展名时用Tika检测
         try {
             Tika tika = new Tika();
@@ -69,5 +71,20 @@ public class DocumentParserFactory {
         } catch (Exception e) {
             throw new DocumentParseException("自动检测文档类型失败", e);
         }
+    }
+
+    public List<DocumentParseResult> autoBatchParse(File file) throws DocumentParseException {
+        List<DocumentParseResult> documentParseResults = new ArrayList<>();
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File listFile : files) {
+                    documentParseResults.addAll(autoBatchParse(listFile));
+                }
+            }
+        } else {
+            documentParseResults.add(autoParse(file));
+        }
+        return documentParseResults;
     }
 }

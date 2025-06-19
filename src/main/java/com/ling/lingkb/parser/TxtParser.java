@@ -21,9 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * Txt解析器
@@ -32,6 +31,7 @@ import java.util.List;
  * @date 2025/6/19
  * @since 1.0.0
  */
+@Component
 public class TxtParser implements DocumentParser {
 
     /**

@@ -25,6 +25,7 @@ import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.springframework.stereotype.Component;
 
 /**
  * PDF文件解析
@@ -33,6 +34,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
  * @date 2025/6/19
  * @since 1.0.0
  */
+@Component
 public class PdfParser implements DocumentParser {
 
     @Override

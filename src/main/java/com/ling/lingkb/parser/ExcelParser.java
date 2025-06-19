@@ -35,6 +35,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Component;
 
 /**
  * Excel解析器
@@ -43,6 +44,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @date 2025/6/19
  * @since 1.0.0
  */
+@Component
 public class ExcelParser implements DocumentParser {
 
     @Override

@@ -24,6 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * Csv文档解析器
@@ -32,6 +33,7 @@ import java.util.List;
  * @date 2025/6/19
  * @since 1.0.0
  */
+@Component
 public class CsvParser implements DocumentParser {
     private static final char DEFAULT_DELIMITER = ',';
 

@@ -27,6 +27,7 @@ import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.springframework.stereotype.Component;
 
 /**
  * Word文件解析
@@ -35,6 +36,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
  * @date 2025/6/19
  * @since 1.0.0
  */
+@Component
 public class WordParser implements DocumentParser {
 
     @Override

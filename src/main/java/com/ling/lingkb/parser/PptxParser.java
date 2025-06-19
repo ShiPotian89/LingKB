@@ -30,6 +30,7 @@ import org.apache.poi.xslf.usermodel.XSLFNotes;
 import org.apache.poi.xslf.usermodel.XSLFShape;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
+import org.springframework.stereotype.Component;
 
 /**
  * PPT文档解析
@@ -38,6 +39,7 @@ import org.apache.poi.xslf.usermodel.XSLFTextShape;
  * @date 2025/6/19
  * @since 1.0.0
  */
+@Component
 public class PptxParser implements DocumentParser {
 
     @Override
