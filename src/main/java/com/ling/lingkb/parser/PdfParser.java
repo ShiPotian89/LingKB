@@ -37,8 +37,8 @@ public class PdfParser implements DocumentParser {
 
     @Override
     public DocumentParseResult parse(File file) throws DocumentParseException {
-        DocumentParseResult result = new DocumentParseResult();
         String fileName = file.getName();
+        DocumentParseResult result = new DocumentParseResult();
         result.setSourceFileName(fileName);
         try (PDDocument document = Loader.loadPDF(file)) {
             PDFTextStripper stripper = new PDFTextStripper();
