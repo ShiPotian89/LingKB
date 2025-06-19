@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -66,6 +68,6 @@ public class TxtParser implements DocumentParser {
 
     @Override
     public List<String> supportedTypes() {
-        return null;
+        return Collections.singletonList("txt");
     }
 }
