@@ -68,6 +68,6 @@ public class TxtParser implements DocumentParser {
 
     @Override
     public List<String> supportedTypes() {
-        return Collections.singletonList("txt");
+        return List.of("txt");
     }
 }
